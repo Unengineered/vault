@@ -1,3 +1,7 @@
+
+
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:vault/vault.dart' as vault;
 
@@ -12,15 +16,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -39,7 +34,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final controller = TextEditingController();
+  final saveController = TextEditingController();
+  final saveValueController = TextEditingController();
+  final getController = TextEditingController();
+  final streamController = TextEditingController();
+  String getValue = "";
+  String streamValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -47,23 +47,74 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Vault"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            StreamBuilder(
-              stream: vault.listen('key'),
-              builder: (context, snapshot){
-              return Text(snapshot.data.toString());
-            }),
-            TextField(
-              controller: controller,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("Get", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, ), textAlign: TextAlign.left),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "key"
+              ),
+              controller: getController,
             ),
-            TextButton(onPressed: (){
-              vault.save('key', controller.text);
-            }, child: Text("Save"))
-          ],
-        ),
+          ),
+          Text('value: $getValue'),
+          TextButton(onPressed: ()async{
+            final value = await vault.get(getController.text);
+            setState(() {
+              getValue = value.toString();
+            });
+          }, child: Text("Get")),
+          Divider(),
+          Text("Stream", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, ), textAlign: TextAlign.left),
+          StreamBuilder(
+            stream: vault.listen(streamValue),
+            builder: (context, snapshot){
+            return Text("value: ${snapshot.data.toString()}");
+          }),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: "key"
+              ),
+              controller: streamController,
+            ),
+          ),
+          TextButton(onPressed: (){
+            setState(() {
+              streamValue = streamController.text;
+              streamController.clear();
+            });
+          }, child: Text("Stream")),
+          Divider(),
+          Text("Save", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, ), textAlign: TextAlign.left),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: "key"
+              ),
+              controller: saveController,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: "value"
+              ),
+              controller: saveValueController,
+            ),
+          ),
+          TextButton(onPressed: (){
+            vault.save(saveController.text, saveValueController.text);
+            saveValueController.clear();
+            saveController.clear();
+          }, child: Text("Save"))
+        ],
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }

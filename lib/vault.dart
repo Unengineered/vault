@@ -1,5 +1,8 @@
 library vault;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'src/locker.dart';
+import 'src/locator.dart';
 
 Vault? _vault;
 
@@ -15,6 +18,7 @@ void deleteAll() => getVault().deleteAll();
 
 Vault getVault(){
   if(_vault == null){
+    locator.registerLazySingleton(() => FlutterSecureStorage());
     _vault = Vault();
   }
   return _vault!;
