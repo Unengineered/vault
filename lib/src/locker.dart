@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'locator.dart';
 
-abstract class Locker{
+abstract class Locker {
   ///Save [object] in secure storage with [key
-  void save(String key,Object object);
+  void save(String key, Object object);
 
   ///Get [Object] stored in secure storage key [key]
   ///
@@ -24,7 +24,7 @@ abstract class Locker{
   void deleteAll();
 }
 
-class Vault implements Locker{
+class Vault implements Locker {
   final storage = locator<FlutterSecureStorage>();
   Map<String, StreamController> streams = Map();
 
@@ -37,21 +37,25 @@ class Vault implements Locker{
   @override
   Future<Object?> get(String key) async {
     final string = await storage.read(key: key);
-    if(string == null) return Future.value();
+    if (string == null) return Future.value();
 
     final json = jsonDecode(string);
 
-    switch(json['type']){
-      case 'int': return int.parse(json['data']);
-      case 'double': return double.parse(json['data']);
-      case 'bool': return json['data'].toLowerCase() == 'true';
-      case 'String': return json['data'].toString();
+    switch (json['type']) {
+      case 'int':
+        return int.parse(json['data']);
+      case 'double':
+        return double.parse(json['data']);
+      case 'bool':
+        return json['data'].toLowerCase() == 'true';
+      case 'String':
+        return json['data'].toString();
     }
   }
 
   @override
   Stream<Object?> listen(String key) {
-    if(streams[key] == null){
+    if (streams[key] == null) {
       streams[key] = StreamController();
     }
 
@@ -66,6 +70,7 @@ class Vault implements Locker{
 
     storage.write(key: key, value: jsonEncode(map));
 
-    if(streams[key] != null && streams[key]!.hasListener) streams[key]!.add(object);
+    if (streams[key] != null && streams[key]!.hasListener)
+      streams[key]!.add(object);
   }
 }

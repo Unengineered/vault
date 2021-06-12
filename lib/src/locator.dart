@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
 
-void setUpDependencies(){
-  locator.registerLazySingleton<FlutterSecureStorage>(() => FlutterSecureStorage());
+void setUpDependencies() {
+  locator.registerLazySingleton<FlutterSecureStorage>(
+      () => FlutterSecureStorage());
 }
