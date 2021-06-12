@@ -1,14 +1,53 @@
-# vault
+# Vault
 
-Save key value pairs securely
+A library that stores int, double, String and bool in encrypted storage. Vault stores it's contents in persistent storage.
 
-## Getting Started
+## Usage
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Import package as ```vault```.
+```dart
+import 'package:vault/vault.dart' as vault;
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Save
+You can save a ```value``` in secure storage by passing a ```key```.
+
+```dart
+vault.save(key, value);
+```
+
+### Get
+You can get a ```value``` from secure storage by passing their ```key```.
+
+```dart
+vault.get(key);
+```
+
+### Listen
+You can listen to live changes done to a ```value``` by passing their ```key```.
+
+```dart
+vault.listen(key);
+```
+
+### Delete
+You can delete a ```value``` by passing their ```key```.
+
+```dart
+vault.delete(key);
+```
+
+### Delete All
+Deletes all the values stored in ```vault```.
+
+```dart
+vault.listen(key);
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://github.com/Unengineered/vault/blob/main/LICENSE)
