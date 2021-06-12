@@ -6,17 +6,26 @@ import 'src/locator.dart';
 
 Vault? _vault;
 
-Future<Object?> get(String key) => getVault().get(key);
+///Get [Object] stored in secure storage key [key]
+///
+/// Returns null if an [Object] is not found
+Future<Object?> get(String key) => _getVault().get(key);
 
-Stream<Object?> listen(String key) => getVault().listen(key);
+///Get a [Stream] of [Object]
+///
+/// Return a [Stream] of null if an object is not found
+Stream<Object?> listen(String key) => _getVault().listen(key);
 
-void save(String key, Object object) => getVault().save(key, object);
+///Save [object] in secure storage with [key]
+void save(String key, Object object) => _getVault().save(key, object);
 
-void delete(String key) => getVault().delete(key);
+///Deletes the value stored with [key]
+void delete(String key) => _getVault().delete(key);
 
-void deleteAll() => getVault().deleteAll();
+///Deletes everything stored in Vault
+void deleteAll() => _getVault().deleteAll();
 
-Vault getVault(){
+Vault _getVault(){
   if(_vault == null){
     locator.registerLazySingleton(() => FlutterSecureStorage());
     _vault = Vault();
