@@ -25,6 +25,8 @@ void delete(String key) => _getVault().delete(key);
 ///Deletes everything stored in Vault
 void deleteAll() => _getVault().deleteAll();
 
+Vault get instance => _getVault();
+
 Vault _getVault(){
   if(_vault == null){
     locator.registerLazySingleton(() => FlutterSecureStorage());
