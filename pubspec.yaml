@@ -1,6 +1,6 @@
 name: vault
 description: Save key value pairs securely
-version: 0.0.2
+version: 0.0.3
 homepage: https://www.unengineered.net
 
 environment:
