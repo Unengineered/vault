@@ -9,7 +9,7 @@ import '../setup/test_helpers.dart';
 void main() {
   group('Save:', () {
     var storage = getAndRegisterFlutterSecureStorageMock();
-    var vault = Vault();
+    var vault = LockerImpl();
 
     test('should save int when int is passed to object', () {
       //Arrange
@@ -64,7 +64,7 @@ void main() {
     test('should get int when int was saved', () async {
       //Arrange
       final storage = getAndRegisterFlutterSecureStorageMock(data: 5);
-      final vault = Vault();
+      final vault = LockerImpl();
 
       //Act
       final number = await vault.get('key');
@@ -78,7 +78,7 @@ void main() {
     test('should get double when double was saved', () async{
       //Arrange
       final storage = getAndRegisterFlutterSecureStorageMock(data: 5.32);
-      final vault = Vault();
+      final vault = LockerImpl();
 
       //Act
       final number = await vault.get('key');
@@ -92,7 +92,7 @@ void main() {
     test('should get bool when bool was saved', () async{
       //Arrange
       final storage = getAndRegisterFlutterSecureStorageMock(data: false);
-      final vault = Vault();
+      final vault = LockerImpl();
 
       //Act
       final boolean = await vault.get('key');
@@ -106,7 +106,7 @@ void main() {
     test('should get string when string was saved', () async{
       //Arrange
       final storage = getAndRegisterFlutterSecureStorageMock(data: "Test string");
-      final vault = Vault();
+      final vault = LockerImpl();
 
       //Act
       final string = await vault.get('key');
@@ -120,7 +120,7 @@ void main() {
     test('should get null when nothing was saved', ()async{
       //Arrange
       final storage = getAndRegisterFlutterSecureStorageMock();
-      final vault = Vault();
+      final vault = LockerImpl();
 
       //Act
       final value = await vault.get('key');
@@ -133,7 +133,7 @@ void main() {
 
   group('Delete', (){
     var storage = getAndRegisterFlutterSecureStorageMock();
-    var vault = Vault();
+    var vault = LockerImpl();
 
     test('should call delete with key', (){
       //Act
@@ -154,7 +154,7 @@ void main() {
 
   group('Stream', (){
     var storage = getAndRegisterFlutterSecureStorageMock();
-    var vault = Vault();
+    var vault = LockerImpl();
 
     test('stream should emit new value of key if the value is changed', (){
       //Arrange

@@ -20,11 +20,11 @@ abstract class Locker {
   ///Deletes the value stored with [key]
   void delete(String key);
 
-  ///Deletes everything stored in [Vault]
+  ///Deletes everything stored in [LockerImpl]
   void deleteAll();
 }
 
-class Vault implements Locker {
+class LockerImpl implements Locker {
   final storage = locator<FlutterSecureStorage>();
   Map<String, StreamController> streams = Map();
 

@@ -1,9 +1,7 @@
-
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:vault/vault.dart' as vault;
+import 'package:vault/vault.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final streamController = TextEditingController();
   String getValue = "";
   String streamValue = "";
+  final vault = Vault();
 
   @override
   Widget build(BuildContext context) {
